@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class Pessoa {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private String nome;
     private Date dataNasc;

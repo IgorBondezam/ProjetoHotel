@@ -1,11 +1,11 @@
 package entities;
 
+import entities.Util.Utils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Hospede extends Pessoa{
-
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private Date dataCheckIn;
     private Date dataCheckOut;
@@ -65,14 +65,15 @@ public class Hospede extends Pessoa{
         this.garagem = garagem;
     }
 
+
     @Override
     public String toString() {
         return "Hospede{\n"+ " Nome=" + getNome() +
-                "\n dataNascimento=" + sdf.format(getDataNasc()) +
-                "\n CheckIn=" + sdf.format(dataCheckIn) +
-                "\n checkOut=" + sdf.format(dataCheckOut) +
-                "\n quarto=" + quarto +
-                "\n garagem='" + garagem + '\'' +
+                "\n\n dataNascimento=" + Utils.formatarData(getDataNasc()) +
+                "\n\n CheckIn=" + Utils.formatarData(dataCheckIn) +
+                "\n\n checkOut=" + Utils.formatarData(dataCheckOut) +
+                "\n\n quarto=" + quarto.getNumeroQuarto() +
+                "\n\n garagem='" + garagem + '\'' +
                 "\n}";
     }
 }
