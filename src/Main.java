@@ -1,4 +1,5 @@
 import entities.Hospede;
+import entities.Hotel;
 import entities.Quarto;
 
 
@@ -16,12 +17,21 @@ public class Main {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Scanner sc = new Scanner(System.in);
         List<Hospede> hospedeList = new ArrayList<>();
+        List<Hotel> hotels = new ArrayList<>();
+        start(hotels);
+
+
+        System.out.println(hotels.get(0).getQuartos().indexOf(0));
+
+
 
         while (true) {
 
             String nome;
             Date nascData;
             Date checkIn;
+            Date checkOut;
+            Integer numeroQuarto;
             String usarGaragem;
 
 
@@ -34,15 +44,38 @@ public class Main {
             System.out.println("Digite a data de checkIn(dd/mm/aaaa): ");
             checkIn = sdf.parse(sc.nextLine());
 
+            System.out.println("Digite a data de checkOut(dd/mm/aaaa): ");
+            checkOut = sdf.parse(sc.nextLine());
+
+            System.out.println("Digite o número do quarto: ");
+            numeroQuarto = sc.nextInt();
+            sc.nextLine();
+
             System.out.println("Irá usar a garagem(sim/nao): ");
             usarGaragem = sc.nextLine();
 
 
-            Hospede hospede = new Hospede(nome, nascData, checkIn, new Quarto(), usarGaragem);
+            Hospede hospede = new Hospede(nome, nascData,
+                    checkIn, checkOut, hotels.get(0).getQuartos().get(numeroQuarto-100),
+                    usarGaragem
+                );
 
             hospedeList.add(hospede);
 
             hospedeList.forEach(System.out::println);
+        }
+
+    }
+
+    public static void start(List<Hotel> hotels){
+
+        Hotel hotel = new Hotel("Novo Horizonte");
+
+        hotels.add(hotel);
+
+        for (int i = 0; i < 20; i++) {
+
+        hotel.adicionarQuarto();
         }
 
     }

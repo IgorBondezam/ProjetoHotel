@@ -5,7 +5,7 @@ import entities.enums.TipoCama;
 public class Quarto {
 
     private Integer numeroQuarto;
-    private TipoCama tipoCama;
+    private Integer tipoCama;
     private String aceitaAnimais;
 
 
@@ -15,7 +15,7 @@ public class Quarto {
 
     public Quarto(Integer numeroQuarto, TipoCama tipoCama, String aceitaAnimais) {
         this.numeroQuarto = numeroQuarto;
-        this.tipoCama = tipoCama;
+        setTipoCama(tipoCama);
         this.aceitaAnimais = aceitaAnimais;
     }
 
@@ -28,11 +28,13 @@ public class Quarto {
     }
 
     public TipoCama getTipoCama() {
-        return tipoCama;
+        return TipoCama.valueOf(tipoCama);
     }
 
     public void setTipoCama(TipoCama tipoCama) {
-        this.tipoCama = tipoCama;
+        if(tipoCama!= null) {
+            this.tipoCama = tipoCama.getCode();
+        }
     }
 
     public String getAceitaAnimais() {
@@ -41,5 +43,14 @@ public class Quarto {
 
     public void setAceitaAnimais(String aceitaAnimais) {
         this.aceitaAnimais = aceitaAnimais;
+    }
+
+    @Override
+    public String toString() {
+        return "Quarto{" +
+                "numeroQuarto=" + numeroQuarto +
+                ", tipoCama=" + TipoCama.valueOf(tipoCama) +
+                ", aceitaAnimais='" + aceitaAnimais + '\'' +
+                '}';
     }
 }
