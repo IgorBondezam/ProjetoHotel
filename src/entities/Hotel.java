@@ -17,13 +17,13 @@ public class Hotel {
     Integer contador;
 
 
-    public Hotel(){
+    public Hotel() {
 
     }
 
     public Hotel(String nome) {
         this.nome = nome;
-        this.contador = 100;
+        contador = 100;
     }
 
     public String getNome() {
@@ -35,28 +35,28 @@ public class Hotel {
     }
 
 
-    public void adicionarQuarto(){
+    public void adicionarQuarto() {
 
-        Quarto umQuarto = new Quarto(contador, TipoCama.valueOf(geradorNum.nextInt(4)+1), "sim");
+
+        Quarto umQuarto = new Quarto(contador, TipoCama.valueOf(geradorNum.nextInt(4) + 1), "sim");
         contador++;
         quartos.add(umQuarto);
     }
 
     //Relaciona o hospede com o quarto
-    public String criarReserva(Hospede hospede){
+    public String criarReserva(Hospede hospede) {
 
-        return "Criar reserva de " + hospede.getNome() + " para o dia " + Utils.formatarData(hospede.getDataCheckIn());
+        return "Criar reserva de " + hospede.getNome() + " para o dia " + Utils.formatarData(hospede.getDataCheckIn()) + ".";
     }
 
-    public String checkIn(Hospede hospede){
+    public String checkIn(Hospede hospede) {
 
         return "";
     }
 
-    public String checkOut(Hospede hospede){
+    public String checkOut(Hospede hospede) {
         return "";
     }
-
 
 
 }

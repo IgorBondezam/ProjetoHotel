@@ -5,7 +5,7 @@ import entities.Util.Utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Hospede extends Pessoa{
+public class Hospede extends Pessoa {
 
     private Date dataCheckIn;
     private Date dataCheckOut;
@@ -68,7 +68,7 @@ public class Hospede extends Pessoa{
 
     @Override
     public String toString() {
-        return "Hospede{\n"+ " Nome=" + getNome() +
+        return "Hospede{\n" + " Nome=" + getNome() +
                 "\n\n dataNascimento=" + Utils.formatarData(getDataNasc()) +
                 "\n\n CheckIn=" + Utils.formatarData(dataCheckIn) +
                 "\n\n checkOut=" + Utils.formatarData(dataCheckOut) +
