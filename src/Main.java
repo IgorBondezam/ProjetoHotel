@@ -5,14 +5,15 @@ import entities.Quarto;
 import entities.enums.TipoCama;
 
 
-import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Main {
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -30,6 +31,7 @@ public class Main {
         boolean quartoEscolhido;
         boolean sair = true;
 
+
         //Cria os hoteis e os quartos dentro de cada hotel
         start(hotels);
 
@@ -39,6 +41,7 @@ public class Main {
 
         System.out.println("Digite a data de nascimento da pessoa(dd/mm/aaaa): ");
         nascData = sdf.parse(sc.nextLine());
+
 
         Pessoa pessoa = new Hospede(nome, nascData);
         do {
@@ -111,20 +114,45 @@ public class Main {
         int numeroQuarto;
         String usarGaragem;
 
-        System.out.println("Digite a data de entrada(dd/mm/aaaa): ");
-        checkIn = sdf.parse(sc.nextLine());
+        do {
+            System.out.println("Digite a data de entrada(dd/mm/aaaa): ");
+            checkIn = sdf.parse(sc.nextLine());
 
-        System.out.println("Digite a data de saída(dd/mm/aaaa): ");
-        checkOut = sdf.parse(sc.nextLine());
+            if (subDate(nascData, checkIn) < 18) {
+                System.out.println("Você é muito novo para realizar essa reserva.\n");
+            }
+        } while (subDate(nascData, checkIn) < 18);
 
-        System.out.println("Digite o número do quarto: ");
-        numeroQuarto = sc.nextInt();
-        sc.nextLine();
+
+        do {
+            System.out.println("Digite a data de saída(dd/mm/aaaa): ");
+            checkOut = sdf.parse(sc.nextLine());
+
+            if (checkOut.before(checkIn)) {
+                System.out.println("O checkIn não pode ser depois do checkOut.\n");
+            }
+        } while (checkOut.before(checkIn));
+
+        do {
+            System.out.println("Digite o número do quarto: ");
+            numeroQuarto = sc.nextInt();
+            sc.nextLine();
+
+            if (numeroQuarto > hotels.get(escolhaHotel).getQuartos().size() + 99 || numeroQuarto < 100) {
+                System.out.println("O hotel não possui esse quarto cadastrado.\n");
+            }
+        } while (numeroQuarto > hotels.get(escolhaHotel).getQuartos().size() + 99 || numeroQuarto < 100);
 
         Quarto quartoEscolhido = hotels.get(escolhaHotel).getQuartos().get(numeroQuarto - 100);
 
-        System.out.println("Irá usar a garagem(sim/nao): ");
-        usarGaragem = sc.nextLine();
+        do {
+            System.out.println("Irá usar a garagem(sim/nao): ");
+            usarGaragem = sc.nextLine();
+
+            if (!(usarGaragem.equals("sim") || usarGaragem.equals("nao"))) {
+                System.out.println("Digite somente sim ou não.\n");
+            }
+        } while (!(usarGaragem.equals("sim") || usarGaragem.equals("nao")));
 
         Hospede hospede = new Hospede(nome, nascData,
                 checkIn, checkOut, quartoEscolhido,
@@ -156,6 +184,13 @@ public class Main {
         }
 
 
+    }
+
+    public static Integer subDate(Date firstLocalDate, Date secondLocalDate) {
+        LocalDate localDateFirst = firstLocalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDateSecond = secondLocalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        return (int) ChronoUnit.YEARS.between(localDateFirst, localDateSecond);
     }
 
 
