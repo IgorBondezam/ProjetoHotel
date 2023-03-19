@@ -46,6 +46,7 @@ public class Hotel {
     //Relaciona o hospede com o quarto
     public String criarReserva(Hospede hospede) {
 
+
         return "Criar reserva de " + hospede.getNome() + " para o dia " + Utils.formatarData(hospede.getDataCheckIn()) + ".";
     }
 
