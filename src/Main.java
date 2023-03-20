@@ -3,6 +3,7 @@ import entities.Hotel;
 import entities.Quarto;
 import entities.Util.Utils;
 import entities.enums.TipoCama;
+import jdk.jshell.execution.Util;
 
 
 import java.text.ParseException;
@@ -28,12 +29,11 @@ public class Main {
         start(hotels);
 
 
-
         do {
 
 
             do {
-                Utils.limparTela();
+                System.out.println("\n\n");
                 escolhaHotel = -1;
                 //Seleciona o hotel
                 System.out.println("Escolha um hotel para viajar.\n" +
@@ -41,22 +41,28 @@ public class Main {
                 //validação se o que foi escrito foi um número
                 try {
                     escolhaHotel = sc.nextInt() - 1;
+                    sc.nextLine();
+                    //validação se o que foi escrito foi um número foi um dos números
+                    if (!(escolhaHotel == 0 || escolhaHotel == 1 || escolhaHotel == 2)) {
+                        System.out.println("\n\n");
+                        System.out.println("Digite um dos valores válidos");
+                        Utils.tempoEspera(2);
+                        Utils.limparTela();
+                    }
                 } catch (InputMismatchException e) {
+                    System.out.println("\n\n");
                     System.out.println("Digite um dos números possíveis");
-                    Utils.tempoEspera(3);
+                    sc.nextLine();
+                    Utils.tempoEspera(2);
+                    Utils.limparTela();
                 }
 
 
-                sc.nextLine();
-                //validação se o que foi escrito foi um número foi um dos números
-                if (!(escolhaHotel == 0 || escolhaHotel == 1 || escolhaHotel == 2)) {
-                    System.out.println("Digite um dos valores válidos");
-                    Utils.tempoEspera(3);
-                }
             } while (!(escolhaHotel == 0 || escolhaHotel == 1 || escolhaHotel == 2));
 
 
             do {
+                System.out.println("\n\n");
                 //Funcionário que realizará o cadastro do hospede
                 System.out.println("Digite o nome do funcionário: ");
                 nome = sc.nextLine();
@@ -87,11 +93,12 @@ public class Main {
 
                                 //FUNCAO Cadastra HOSPEDE
                                 Utils.limparTela();
+                                System.out.println("--Cadastrar Hospede--");
                                 String hospedeCriado = hotels.get(escolhaHotel).criarReserva(sc, hotels, escolhaHotel);
 
                                 System.out.println("\n");
                                 System.out.println(hospedeCriado);
-                                Utils.tempoEspera(5);
+                                Utils.tempoEspera(2);
                                 System.out.println("\n");
 
 
@@ -107,14 +114,14 @@ public class Main {
                                         System.out.println("Quais tipos de quartos deseja ver:\n" +
                                                 "1-CASAL 2-SOLTEIRO 3-BELICHE 4-TRES CAMAS 5-TODOS;");
                                         escolhaCama = sc.nextInt();
-                                    }catch (IllegalArgumentException | InputMismatchException e){
+                                    } catch (IllegalArgumentException | InputMismatchException e) {
                                         sc.nextLine();
                                         System.out.println("Digite um número válido.");
                                         escolhaCama = 0;
-                                        Utils.tempoEspera(1);
+                                        Utils.tempoEspera(2);
                                         Utils.limparTela();
                                     }
-                                }while (escolhaCama>5 || escolhaCama<1);
+                                } while (escolhaCama > 5 || escolhaCama < 1);
 
                                 if (escolhaCama == 5) {
                                     List<Quarto> selecaoQuartos = hotels.get(escolhaHotel).getQuartos();
@@ -140,9 +147,7 @@ public class Main {
                                     }
                                 }
 
-                                System.out.println("\n\nPrecione enter para voltar...\n");
-                                sc.nextLine();
-                                sc.nextLine();
+                                Utils.aperteEnter();
 
                             }
                             case 3 -> {
@@ -166,29 +171,56 @@ public class Main {
                                                 "\n\n");
                                     }
                                 }
-                                Utils.tempoEspera(10);
+                                Utils.aperteEnter();
                             }
 
                             case 4 -> {
-                                Utils.limparTela();
-                                System.out.println("Qual quarto deseja fazer checkIn:");
-                                int numeroQuartoCheckIn = sc.nextInt();
-                                sc.nextLine();
-                                System.out.println(hotels.get(escolhaHotel)
-                                        .checkIn(numeroQuartoCheckIn - 100, new Date()));
-                                Utils.tempoEspera(5);
-                                Utils.limparTela();
+                                boolean condicao;
+                                do {
+                                    try {
+                                        condicao = false;
+                                        Utils.limparTela();
+                                        System.out.println("--Realização de CheckIn--");
+                                        System.out.println("Qual quarto deseja fazer checkIn:");
+                                        int numeroQuartoCheckIn = sc.nextInt();
+
+                                        sc.nextLine();
+
+                                        System.out.println(hotels.get(escolhaHotel)
+                                                .checkIn(numeroQuartoCheckIn - 100, new Date()));
+                                        Utils.aperteEnter();
+
+                                    } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                                        System.out.println("Digite um valor válido");
+                                        condicao = true;
+
+                                        Utils.tempoEspera(1);
+                                        System.out.println("\n\n");
+                                    }
+                                } while (condicao);
                             }
 
                             case 5 -> {
-                                Utils.limparTela();
-                                System.out.println("Qual quarto deseja fazer checkOut:");
-                                int numeroQuartoCheckOut = sc.nextInt();
-                                sc.nextLine();
-                                System.out.println(hotels.get(escolhaHotel)
-                                        .checkOut(numeroQuartoCheckOut - 100, new Date()));
-                                Utils.tempoEspera(5);
-                                Utils.limparTela();
+                                boolean condicao;
+                                do {
+                                    try {
+                                        condicao = false;
+                                        Utils.limparTela();
+                                        System.out.println("--Realização de CheckOut--");
+                                        System.out.println("Qual quarto deseja fazer checkOut:");
+                                        int numeroQuartoCheckOut = sc.nextInt();
+                                        sc.nextLine();
+                                        System.out.println(hotels.get(escolhaHotel)
+                                                .checkOut(numeroQuartoCheckOut - 100, new Date()));
+                                        Utils.aperteEnter();
+                                    } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                                        System.out.println("Digite um valor válido");
+                                        condicao = true;
+
+                                        Utils.tempoEspera(1);
+                                        System.out.println("\n\n");
+                                    }
+                                } while (condicao);
                             }
 
                             case 8 -> {
@@ -214,13 +246,15 @@ public class Main {
                             default -> {
                                 System.out.println("\n\n");
                                 System.out.println("Essa opção não exite.\nDigite uma opção válida!");
-                                Utils.tempoEspera(1);
+                                Utils.tempoEspera(2);
                                 Utils.limparTela();
                             }
                         }
                     } catch (InputMismatchException e) {
+                        System.out.println("\n");
+                        sc.nextLine();
                         System.out.println("Digite o valor válido para a operação.");
-                        Utils.tempoEspera(3);
+                        Utils.tempoEspera(2);
 
                     }
                 } while (quartoEscolhido);

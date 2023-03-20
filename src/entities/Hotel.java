@@ -36,8 +36,14 @@ public class Hotel {
 
     public void adicionarQuarto() {
 
+        String animais;
+        if(geradorNum.nextInt(2)==1){
+            animais = "sim";
+        }else {
+            animais = "nao";
+        }
 
-        Quarto umQuarto = new Quarto(contador, TipoCama.valueOf(geradorNum.nextInt(4) + 1), "sim");
+        Quarto umQuarto = new Quarto(contador, TipoCama.valueOf(geradorNum.nextInt(4) + 1), animais);
         contador++;
         quartos.add(umQuarto);
     }
@@ -65,11 +71,12 @@ public class Hotel {
 
             } catch (InputMismatchException | ParseException e) {
                 System.out.println("Digite um valor válido");
-                checkIn = Utils.stringToData("00/01/9999");
+                checkIn = Utils.stringToData("01/01/0001");
                 condicao = true;
                 Utils.tempoEspera(2);
+                System.out.println("\n\n");
             }
-        } while (condicao);
+        } while ((condicao));
         Pessoa pessoa = new Hospede(nome, nascData);
 
         //NUMERO DO QUARTO
@@ -87,6 +94,7 @@ public class Hotel {
                 numeroQuarto = 0;
                 sc.nextLine();
                 Utils.tempoEspera(2);
+                System.out.println("\n\n");
             }
         } while (numeroQuarto > hotels.get(escolhaHotel).getQuartos().size() + 99 || numeroQuarto < 100);
 
@@ -110,9 +118,10 @@ public class Hotel {
                     }
                 } catch (InputMismatchException | ParseException e) {
                     System.out.println("Digite um valor válido");
-                    checkIn = Utils.stringToData("00/01/9999");
+                    checkIn = Utils.stringToData("01/01/0001");
 
                     Utils.tempoEspera(2);
+                    System.out.println("\n\n");
                 }
             } while (Utils.subDate(nascData, checkIn) < 18
                     || !(Utils.locadoEntreOsDias(quartoEscolhido, checkIn, null)));
@@ -135,6 +144,8 @@ public class Hotel {
                     checkOut = Utils.stringToData("00/01/0001");
 
                     Utils.tempoEspera(2);
+
+                    System.out.println("\n\n");
                 }
             } while (checkOut.before(checkIn) || !(Utils.locadoEntreOsDias(quartoEscolhido, null, checkOut)));
 
@@ -159,6 +170,7 @@ public class Hotel {
                 usarGaragem = null;
                 sc.nextLine();
                 Utils.tempoEspera(2);
+                System.out.println("\n\n");
             }
         } while (!(usarGaragem.equals("sim") || usarGaragem.equals("nao")));
 
@@ -175,6 +187,7 @@ public class Hotel {
 
 
     public String checkIn(Integer numeroQuartoCheckIn, Date data) throws ParseException {
+
 
         int identificador = -1;
 
@@ -219,7 +232,7 @@ public class Hotel {
             }
         }
 
-        if (identificador >= 0) {
+        if (identificador >= 0 && quartos.get(numeroQuartoCheckOut).statusCheckIn) {
             quartos.get(numeroQuartoCheckOut).statusCheckIn = false;
             String msg = "Check-Out de " + quartos.get(numeroQuartoCheckOut).getHospedeList().get(identificador).getNome() +
                     " em " + Utils.formatarData(dataConver) + " realizado com sucesso no quarto " + (numeroQuartoCheckOut + 100) + ".";
@@ -227,6 +240,8 @@ public class Hotel {
             quartos.get(numeroQuartoCheckOut).getCheckOutDoQuarto().remove(identificador);
             quartos.get(numeroQuartoCheckOut).getHospedeList().remove(identificador);
             return msg;
+        }else if(identificador >= 0 && !(quartos.get(numeroQuartoCheckOut).statusCheckIn)){
+            return "É preciso realizar o checkIn primeiro.";
         }
 
         return "Não há nenhum checkIn para esse quarto na data de hoje.";

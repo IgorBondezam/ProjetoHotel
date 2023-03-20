@@ -8,10 +8,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Scanner;
 
 public abstract class Utils {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private static final Scanner sc = new Scanner(System.in);
 
     public static String formatarData(Date data){
         return sdf.format(data);
@@ -75,5 +77,12 @@ public abstract class Utils {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public static void aperteEnter(){
+        System.out.println("\n\nPrecione enter para voltar...\n");
+        sc.nextLine();
+
+        limparTela();
     }
 }
