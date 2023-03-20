@@ -9,7 +9,7 @@ public class Pessoa {
     private String nome;
     private Date dataNasc;
 
-    public Pessoa(){
+    public Pessoa() {
 
     }
 

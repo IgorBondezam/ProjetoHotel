@@ -13,6 +13,8 @@ public class Quarto {
     private Integer tipoCama;
     private String aceitaAnimais;
 
+    public Boolean statusCheckIn;
+
     private List<Hospede> hospedeList = new ArrayList<>();
     private List<Date> checkInDoQuarto = new ArrayList<>();
     private List<Date> checkOutDoQuarto = new ArrayList<>();
@@ -25,6 +27,7 @@ public class Quarto {
     public Quarto(Integer numeroQuarto, TipoCama tipoCama, String aceitaAnimais) {
         this.numeroQuarto = numeroQuarto;
         setTipoCama(tipoCama);
+        statusCheckIn = false;
         this.aceitaAnimais = aceitaAnimais;
     }
 
