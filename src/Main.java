@@ -147,6 +147,7 @@ public class Main {
                                     }
                                 }
 
+                                sc.nextLine();
                                 Utils.aperteEnter();
 
                             }
@@ -188,8 +189,8 @@ public class Main {
 
                                         System.out.println(hotels.get(escolhaHotel)
                                                 .checkIn(numeroQuartoCheckIn - 100, new Date()));
+                                        sc.nextLine();
                                         Utils.aperteEnter();
-
                                     } catch (InputMismatchException | IndexOutOfBoundsException e) {
                                         System.out.println("Digite um valor válido");
                                         condicao = true;
@@ -212,6 +213,7 @@ public class Main {
                                         sc.nextLine();
                                         System.out.println(hotels.get(escolhaHotel)
                                                 .checkOut(numeroQuartoCheckOut - 100, new Date()));
+                                        sc.nextLine();
                                         Utils.aperteEnter();
                                     } catch (InputMismatchException | IndexOutOfBoundsException e) {
                                         System.out.println("Digite um valor válido");
